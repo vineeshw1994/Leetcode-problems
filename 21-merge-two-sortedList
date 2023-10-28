@@ -1,0 +1,53 @@
+class ListNode {
+    constructor(val) {
+        this.val = val;
+        this.next = null;
+    }
+}
+
+function mergeTwoLists(l1, l2) {
+    const dummy = new ListNode(-1);
+    let current = dummy;
+
+    while (l1 && l2) {
+        if (l1.val < l2.val) {
+            current.next = l1;
+            l1 = l1.next;
+        } else {
+            current.next = l2;
+            l2 = l2.next;
+        }
+        current = current.next;
+    }
+
+    current.next = l1 || l2;
+
+    return dummy.next;
+}
+
+// Helper function to create a linked list from an array
+function createLinkedList(arr) {
+    let dummy = new ListNode(-1);
+    let current = dummy;
+    for (const val of arr) {
+        current.next = new ListNode(val);
+        current = current.next;
+    }
+    return dummy.next;
+}
+
+// Helper function to convert a linked list to an array
+function linkedListToArray(head) {
+    const result = [];
+    while (head) {
+        result.push(head.val);
+        head = head.next;
+    }
+    return result;
+}
+
+const list1 = createLinkedList([1, 2, 4]);
+const list2 = createLinkedList([1, 3, 4]);
+const mergedList = mergeTwoLists(list1, list2);
+
+console.log(linkedListToArray(mergedList)); // Output: [1, 1, 2, 3, 4, 4]
